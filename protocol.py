@@ -1,5 +1,11 @@
 import socket
 
+class TCPPacket:
+    def __init__(self, data, syn=None, seq=None, ack=None):
+        self.data = data
+    def __bytes__(self):
+        return self.data
+
 
 class UDPBasedProtocol:
     def __init__(self, *, local_addr, remote_addr):
@@ -21,7 +27,8 @@ class UDPBasedProtocol:
 class MyTCPProtocol(UDPBasedProtocol):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
+        self.sent_length = 1 
+        self.recv_length = 1
     def send(self, data: bytes):
         return self.sendto(data)
 
